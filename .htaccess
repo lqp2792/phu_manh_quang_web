@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    SetEnv HTTP_MOD_REWRITE On
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^Register/?$ index.php
+    RewriteRule ^Login/?$ index.php
+    RewriteRule ^Logout/?$ index.php
+    RewriteRule ^Account/?$ index.php
+    RewriteRule ^Account/Add/?$ index.php
+</IfModule>
