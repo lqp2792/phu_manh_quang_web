@@ -3,6 +3,8 @@
         public $content;
         public $exam;
         public $type;
+        public $level;
+        public $comment;
         public $choice_a;
         public $choice_b;
         public $choice_c;
@@ -17,6 +19,12 @@
         }
         public function set_type($type) {
             $this->type = $type;
+        }
+        public function set_level($level) {
+            $this->level = $level;
+        }
+        public function set_comment($comment) {
+            $this->comment = $comment;
         }
         public function set_choice_a($choice_a) {
             $this->choice_a = $choice_a;

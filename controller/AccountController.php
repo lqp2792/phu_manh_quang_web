@@ -15,12 +15,12 @@
             session_start();
             $page_title = "Account Panel";
             include('layout/header.php');
-            $function = strtolower($this->action.'_question');
+            $function = strtolower($this->action);
             if(isset($this->action)) call_user_func(array($this, $function));
             include('layout/footer.html');
         }
 
-        public function add_question() {
+        public function add() {
             if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $question = new QuestionModel();
                 $error = $this->check_question();
@@ -28,6 +28,8 @@
                     $question->set_content($_POST['content']);
                     if(strcmp($_POST['exam'], "empty") != 0) $question->set_exam($_POST['exam']);
                     $question->set_type($_POST['type']);
+                    if(strcmp($_POST['level'], "empty") != 0) $question->set_level($_POST['level']);
+                    if(isset($_POST['comment'])) $question->set_comment($_POST['comment']);
                     $question->set_choice_a($_POST['choice_a']);
                     $question->set_choice_b($_POST['choice_b']);
                     $question->set_choice_c($_POST['choice_c']);
@@ -38,6 +40,7 @@
                     '$question->type', '$question->choice_a', '$question->choice_b', '$question->choice_c',
                     '$question->choice_d' ,'$question->answer')";
                     $r = $this->db->query($dbc, $query);
+                    $this->add_info($dbc, $_SESSION['username'], $question);
                     if($r) {
                         include('view/AddQuestionSuccessView.php');
                     }
@@ -47,6 +50,19 @@
             }
             include('view/AddQuestionView.php');
         }
+        public function add_info($dbc, $username, $question) {
+            $qid = mysqli_insert_id($dbc);
+            $query = "INSERT INTO questions_info VALUES ($qid, '".$username."', NOW())";
+            $this->db->query($dbc, $query);
+            $query = "INSERT INTO questions_level VALUES ($qid, '$question->level', '$question->comment')";
+            $this->db->query($dbc, $query);
+        }
+        public function show() {
+            include('view/ShowQuestionsView.php');
+        }
+        public function create(){
+            include('view/CreateTestView.php');
+        }
         public function check_question() {
             $error = array();
             if(empty($_POST['content'])) {
@@ -54,6 +70,10 @@
             }
             if(strcmp($_POST['type'], "empty") == 0) {
                 $error[] = 'You forgot to choose question type';
+            } else {
+                if(strcmp($_POST['level'], "empty") == 0) {
+                    $error[] = 'You forgot to choose question level';
+                }
             }
             if(empty($_POST['choice_a'])) {
                 $error[] = 'You forgot to enter Choice A';

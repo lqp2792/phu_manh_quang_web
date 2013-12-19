@@ -1,4 +1,17 @@
 <div class="full_w">
+    <script>
+        $(document).ready(function() {
+            $(".level").hide();
+            $(".type").change(function() {
+                var option = $(this).val();
+                if(option != "empty")  {
+                    $(".level").show();
+                } else {
+                    $(".level").hide();
+                }
+            });
+        });
+    </script>
     <div class="h_title">Add New Question</div>
     <form action="" method="post">
         <div class="element">
@@ -9,7 +22,7 @@
         </div>
         <div class="element">
             <label for="exam">Exam <span>(optional)</span></label>
-            <select name="exam" >
+            <select name="exam">
                 <option value="empty">Exam Name</option>
                 <option value="TOEIC">TOEIC</option>
                 <option value="TOEFL">TOEFL</option>
@@ -19,14 +32,28 @@
                 <option value="GMAT">GMAT</option>
             </select>
         </div>
+
         <div class="element">
             <label for="type">Type <span class="red">(required)</span></label>
-            <select name="type" >
+            <select name="type" class="type">
                 <option value="empty">Question Type</option>
                 <option value="Grammar">Grammar</option>
                 <option value="Vocabulary">Vocabulary</option>
                 <option value="Reading">Reading</option>
             </select>
+
+            <select name="level" class="level">
+                <option value="empty">Level</option>
+                <option value="pre_inter">Pre-Inter</option>
+                <option value="inter">Intermediate</option>
+                <option value="adv_inter">Advanced</option>
+            </select>
+        </div>
+        <div class="element">
+            <label for="comment">Comment:  <span>(What's this question about?)(optional)</span></label>
+            <input class="text" type="text" name="comment" value="<?php
+            if(isset($_POST['comment']) && !empty($error)) echo $_POST['comment'];
+            ?>"/>
         </div>
         <div class="element">
             <label for="choice_a">Choice A:</label>

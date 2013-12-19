@@ -14,10 +14,20 @@
             <div class="h_title">&#8250; Manage Database</div>
             <ul>
                 <li class="b2"><a class="icon add_page" href="Account/Add/">Add New Question</a></li>
-                <li class="b1"><a class="icon page" href="">Show All Questions</a></li>
+                <li class="b1"><a class="icon page" href="Account/Show/">Show All Questions</a></li>
                 <li class="b2"><a class="icon category" href="">Question Categories</a></li>
             </ul>
-        </div>';
+            </div>';
+
+            echo '<div class="box">
+            <div class="h_title">&#8250; Test Control</div>
+            <ul>
+                <li class="b1"><a class="icon users" href="Account/Create/">Take a test</a></li>
+                <li class="b2"><a class="icon add_user" href="">Add new user</a></li>
+                <li class="b1"><a class="icon block_users" href="">Lock users</a></li>
+                </ul>
+            </div>
+            ';
         }
     ?>
 
