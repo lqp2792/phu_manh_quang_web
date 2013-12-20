@@ -3,8 +3,7 @@
     <form action="" method="post">
     <?php
         $i =1;
-        while($question = mysqli_fetch_array($test, MYSQLI_ASSOC)) {
-            $this->test->result[] = $question['answer'];
+        while($question = mysqli_fetch_array($question_set, MYSQLI_ASSOC)) {
             echo "<h2>Q$i: ".$question['content']."</h2>";
     ?>
         <div class="element">

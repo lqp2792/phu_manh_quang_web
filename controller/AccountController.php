@@ -6,7 +6,6 @@
         public $action;
         public $params;
         public $db;
-        public $test;
         public function __construct() {
             $this->db = new DatabaseModel();
         }
@@ -88,6 +87,9 @@
             include('view/ShowQuestionsView.php');
         }
         public function play() {
+            $page_title = "Play";
+            include('layout/header.php');
+            $dbc = $this->db->loadDatabase();
             if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 for($i=1; $i<$_GET['page']; $i++) {
                     $answer = "answer$i";
@@ -97,12 +99,12 @@
                     $this->test->user_result[] = $_POST[$answer];
                 }
                 $this->check_result();
+                include('view/ResultView.php');
+                include('layout/footer.html');
+                $this->db->close($dbc);
             }
-            $page_title = "Play";
-            $dbc = $this->db->loadDatabase();
-            $this->test = new TestModel($_GET['type'], $_GET['level'], $_GET['exam'], $_GET['page']);
-            $test = $this->test->get_questions($this->db, $dbc);
-            include('layout/header.php');
+            $test = new TestModel($_GET['type'], $_GET['level'], $_GET['exam'], $_GET['page']);
+            $question_set = $test->get_questions($this->db, $dbc);
             include('view/PlayView.php');
             include('layout/footer.html');
         }
