@@ -7,5 +7,6 @@
     RewriteRule ^Login/?$ index.php
     RewriteRule ^Logout/?$ index.php
     RewriteRule ^Account/?$ index.php
-    RewriteRule ^Account/Add/?$ index.php
+    RewriteRule ^Account/[A-Za-z]+/?$ index.php
+    RewriteRule ^Account/Play/([^/.]+)/([^/.]+)/([^/.]+)/([0-9]+)/?$ index.php?type=$1&level=$2&exam=$3&page=$4 [L,NC,QSA]
 </IfModule>
