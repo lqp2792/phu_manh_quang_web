@@ -58,6 +58,22 @@
             $this->db->query($dbc, $query);
         }
         public function show() {
+            $query = "SELECT * FROM questions";
+            $result = $this->db->query($this->db->loadDatabase(), $query);
+            $num_result = $result->num_rows;
+            $page_limit = 10;
+            $uri = $_SERVER['REQUEST_URI'];
+            $uri = rtrim($uri, '/');
+            $uri = ltrim($uri, '/');
+            $data = explode("/", $uri);
+            $page = $data[3];
+            //echo $data[3];
+            if(($num_result % 10)>0) {
+                $num_page = ($num_result - $num_result%10)/10 + 1;
+            } else {$num_page = $num_result/10;}
+            $query = "SELECT * FROM questions LIMIT ".$page*$page_limit.",".$page_limit;
+            $result = $this->db->query($this->db->loadDatabase(), $query);
+
             include('view/ShowQuestionsView.php');
         }
         public function create(){
