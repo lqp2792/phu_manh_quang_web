@@ -61,7 +61,7 @@
                     $row = mysqli_fetch_array($r, MYSQL_ASSOC);
                     return array(true, $row);
                 } else {
-                    $errors[] = 'The username and password entered do not match those on file';
+                    $error[] = 'Your username or password does not match.';
                 }
             }
             return array(false, $error);

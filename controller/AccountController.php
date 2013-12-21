@@ -69,18 +69,38 @@
             $this->db->query($dbc, $query);
         }
         public function show() {
+            $page_title = "Show All Questions";
             $query = "SELECT * FROM questions";
+
             $result = $this->db->query($this->db->loadDatabase(), $query);
             $num_result = $result->num_rows;
             $page_limit = 10;
-            $page = $_GET['page'];
+            if(!$_GET['page']) {$page=1;}
+            else $page = $_GET['page'];
             if(($num_result % 10)>0) {
                 $num_page = ($num_result - $num_result%10)/10 + 1;
             } else {$num_page = $num_result/10;}
-            $query = "SELECT * FROM questions LIMIT ".$page*$page_limit.",".$page_limit;
+            $query = "SELECT * FROM questions LIMIT ".($page-1)*$page_limit.",".$page_limit;
             $result = $this->db->query($this->db->loadDatabase(), $query);
             include('layout/header.php');
             include('view/ShowQuestionsView.php');
+            include('layout/footer.html');
+        }
+        public function questionhistory() {
+            $page_title = "Question History";
+            $query = "SELECT * FROM questions_info";
+            $result = $this->db->query($this->db->loadDatabase(), $query);
+            $num_result = $result->num_rows;
+            $page_limit = 10;
+            if(!$_GET['page']) {$page=1;}
+            else $page = $_GET['page'];
+            if(($num_result % 10)>0) {
+                $num_page = ($num_result - $num_result%10)/10 + 1;
+            } else {$num_page = $num_result/10;}
+            $query = "SELECT * FROM questions_info LIMIT ".($page-1)*$page_limit.",".$page_limit;
+            $result = $this->db->query($this->db->loadDatabase(), $query);
+            include('layout/header.php');
+            include('view/QuestionHistoryView.php');
             include('layout/footer.html');
         }
         public function play() {

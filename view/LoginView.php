@@ -6,6 +6,6 @@
         <label for="pass">Password:</label>
         <input class="text" type="password" name="password"  />
         <div class="sep"></div>
-        <button class="ok" type="submit" name="submit">Login</button> <a class="button" href="">Forgotten password?</a>
+        <button class="ok" type="submit" name="submit">Login</button> <a class="button" href="ForgottenPassword">Forgotten password?</a>
     </form>
 </div>

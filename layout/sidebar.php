@@ -14,7 +14,7 @@
             <ul>
                 <li class="b2"><a class="icon add_page" href="Account/Add/">Add New Question</a></li>
                 <li class="b1"><a class="icon page" href="Account/Show/">Show All Questions</a></li>
-                <li class="b2"><a class="icon category" href="">Question Categories</a></li>
+                <li class="b2"><a class="icon category" href="Account/QuestionHistory/">Question History</a></li>
             </ul>
             </div>';
 
