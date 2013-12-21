@@ -72,7 +72,8 @@
             $result = $this->db->query($this->db->loadDatabase(), $query);
             $num_result = $result->num_rows;
             $page_limit = 10;
-            $page = $_GET['page'];
+            if(isset($_GET['page'])) $page = $_GET['page'];
+            else $page = 0;
             if(($num_result % 10)>0) {
                 $num_page = ($num_result - $num_result%10)/10 + 1;
             } else {$num_page = $num_result/10;}
@@ -85,29 +86,60 @@
         public function play() {
             $page_title = "Play";
             include('layout/header.php');
-            $dbc = $this->db->loadDatabase();
+            $user_answer = array();
             if($_SERVER['REQUEST_METHOD'] == 'POST') {
-                for($i=1; $i<$_GET['page']; $i++) {
+                for($i=0; $i<$_GET['page']; $i++) {
                     $answer = "answer$i";
                     if(!isset($_POST[$answer])) {
                         $_POST[$answer] = "";
                     }
-                    $this->test->user_result[] = $_POST[$answer];
+                    $user_answer[] = $_POST[$answer];
                 }
-                $this->check_result();
+                $result = $this->check_result($user_answer);
+                if(isset($_GET['level'])) {
+                    switch($_GET['level']) {
+                        case "pre_inter":
+                            $score_per_question=5;
+                            break;
+                        case "inter":
+                            $score_per_question=10;
+                            break;
+                        case "adv_inter";
+                            $score_per_question=15;
+                            break;
+                    }
+                } else {
+                    $score_per_question=5;
+                }
+                $score = $this->cal_score($result, $score_per_question);
                 include('view/ResultView.php');
                 include('layout/footer.html');
-                $this->db->close($dbc);
+                return;
             }
+            $dbc = $this->db->loadDatabase();
             $test = new TestModel($_GET['type'], $_GET['level'], $_GET['exam'], $_GET['page']);
             $question_set = $test->get_questions($this->db, $dbc);
             include('view/PlayView.php');
             include('layout/footer.html');
+            $this->db->close($dbc);
         }
-        public function check_result() {
-            for($i=0; $i<$this->test->page_num; $i++) {
-                echo 'Result :'.$this->test->user_result[$i]. ' vs '.$this->test->result[$i];
+
+        public function cal_score($result, $score_per_question) {
+            $score=0;
+            for($i=0; $i<$_GET['page']; $i++) {
+                if($result[$i]) $score+=$score_per_question;
             }
+            return $score;
+        }
+        public function check_result($user_answer) {
+            $answer = $_SESSION['result'];
+            $result = array();
+            for($i=0; $i<$_GET['page']; $i++) {
+                if(strcmp($answer[$i], $user_answer[$i])==0) {
+                    $result[] = true;
+                } else $result[] = false;
+            }
+            return $result;
         }
         public function create(){
             $page_title = "Create a Test";
