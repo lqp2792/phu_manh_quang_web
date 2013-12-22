@@ -34,5 +34,8 @@
             $r = mysqli_query($dbc, $query);
             return $r;
         }
+        function close($dbc) {
+            mysqli_close($dbc);
+        }
     }
 ?>

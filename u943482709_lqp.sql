@@ -4,7 +4,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 19, 2013 at 01:53 PM
+-- Generation Time: Dec 20, 2013 at 01:51 PM
 -- Server version: 5.1.66
 -- PHP Version: 5.2.17
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `choice_d` text COLLATE utf8_unicode_ci NOT NULL,
   `answer` char(1) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`qid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=27 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=48 ;
 
 --
 -- Dumping data for table `questions`
@@ -70,7 +70,28 @@ INSERT INTO `questions` (`qid`, `content`, `exam`, `type`, `choice_a`, `choice_b
 (23, 'Pandemonium', 'TOEIC', 'Vocabulary', 'Nature', 'Fiction', 'Medal', 'Uproar', 'D'),
 (24, 'Extant', 'TOEIC', 'Vocabulary', 'Inferior', 'Motionless', 'Blossoming', 'Existing', 'D'),
 (25, 'Indemnify', 'TOEIC', 'Vocabulary', 'Produce', 'Insure', 'Wail', 'Unify', 'B'),
-(26, 'Extrapolate', 'TOEIC', 'Vocabulary', 'Pretend', 'Contain', 'Discuss', 'Infer', 'D');
+(26, 'Extrapolate', 'TOEIC', 'Vocabulary', 'Pretend', 'Contain', 'Discuss', 'Infer', 'D'),
+(27, 'amelioration', 'TOEFL', 'Vocabulary', 'cancellation', 'consideration', 'bribe', 'worsening', 'D'),
+(28, 'probity', 'TOEFL', 'Vocabulary', 'corruptibility', 'audit', 'philosophy', 'avidity', 'A'),
+(29, 'turpitude', 'TOEFL', 'Vocabulary', 'clever', 'lucidity', 'lively imagination', 'saintly', 'D'),
+(30, 'ostentatious', 'TOEFL', 'Vocabulary', 'niggardly', 'divine', 'noisome', 'plain', 'D'),
+(31, 'postulate', 'TOEFL', 'Vocabulary', 'defame', 'reject', 'congregate', 'verify', 'D'),
+(32, 'nil:\r\nHis mark for that question was nil', 'TOEIC', 'Vocabulary', 'nothing', 'very bad', 'very good', 'in the middle', 'A'),
+(33, 'quiz:\r\nWe made a quiz', 'TOEIC', 'Grammar', 'set of questions', 'serious mistake', 'boz for birds to make nest in', 'thong to hold arrows', 'A'),
+(34, 'figure:\r\nIs this the right figure?', 'TOEIC', 'Vocabulary', 'place', 'number', 'time', 'answer', 'A'),
+(35, 'accessory:\r\nThey gave us some accessories.', 'TOEIC', 'Vocabulary', 'ideas to choose between', 'official orders', 'extra pieces', 'papers giving us the right to enter a country', 'B'),
+(36, 'upset:\r\nI am upset.', 'TOEIC', 'Vocabulary', 'tired', 'famous', 'rich', 'unhappy', 'A'),
+(37, 'kindergarten:\r\nThis a good kindergarten.', 'TOEIC', 'Vocabulary', 'place where you may borrow books', 'place of learning for children too young for school', 'strong, deep bag carried on the back', 'activity that follow you to forget your worries', 'B'),
+(38, 'strangle:\r\nHe strangled her.', 'TOEIC', 'Vocabulary', 'gave her all the things she wanted', 'took her away by force', 'admired her greatly', 'killed her by pressing her thoat', 'B'),
+(39, 'canonical:\r\nThese are canonical examples.', 'TOEIC', 'Vocabulary', 'examples which break the usual rules', 'examples discovered very recently', 'examples taken from a religious book', 'regular and widely accepted examples', 'B'),
+(40, 'scrub:\r\nHe is scrubbing it.', 'TOEIC', 'Vocabulary', 'rubbing it hard to clean it', 'repairing it', 'drawing simple pictures of it', 'cutting shallow lines to it', 'C'),
+(41, 'stealth:\r\nThey did it by stealth.', 'TOEIC', 'Vocabulary', 'taking no notice of problems they met', 'spending a large amount of money', 'hurting someone so much that they argreed to thier demands', 'moving secretly with extreme care and quietness', 'D'),
+(42, 'puma:\r\nThey saw a puma.', 'TOEIC', 'Vocabulary', 'small house made of mud bricks', 'tree from hot, dry countries', 'large wild cat', 'very strong wind that sucks up anything in its path', 'C'),
+(43, 'travail', 'TOEIC', 'Vocabulary', 'excitement', 'trouble', 'exaggeration', 'relaxation', 'D'),
+(44, 'mannered', 'TOEIC', 'Vocabulary', 'infantile', 'progressive', 'natural', 'ignorant', 'C'),
+(45, 'deposition', 'TOEIC', 'Vocabulary', 'process of eroding', 'process of congealing', 'process of condensing', 'process of evolving', 'A'),
+(46, 'chasten', '', 'Vocabulary', 'refute', 'accept', 'avoid', 'reward', 'D'),
+(47, 'convoke', '', 'Vocabulary', 'adjourn', 'forgive', 'omit', 'abridge', 'B');
 
 -- --------------------------------------------------------
 
@@ -115,7 +136,29 @@ INSERT INTO `questions_info` (`qid`, `user_added`, `date_added`) VALUES
 (23, 'lqp2792', '2013-12-19'),
 (24, 'lqp2792', '2013-12-19'),
 (25, 'lqp2792', '2013-12-19'),
-(26, 'lqp2792', '2013-12-19');
+(26, 'lqp2792', '2013-12-19'),
+(27, 'shu0ku0chi', '2013-12-19'),
+(28, 'shu0ku0chi', '2013-12-19'),
+(29, 'shu0ku0chi', '2013-12-19'),
+(30, 'shu0ku0chi', '2013-12-19'),
+(31, 'shu0ku0chi', '2013-12-19'),
+(32, 'lqp2792', '2013-12-20'),
+(33, 'lqp2792', '2013-12-20'),
+(0, 'lqp2792', '2013-12-20'),
+(34, 'lqp2792', '2013-12-20'),
+(35, 'lqp2792', '2013-12-20'),
+(36, 'lqp2792', '2013-12-20'),
+(37, 'lqp2792', '2013-12-20'),
+(38, 'lqp2792', '2013-12-20'),
+(39, 'lqp2792', '2013-12-20'),
+(40, 'lqp2792', '2013-12-20'),
+(41, 'lqp2792', '2013-12-20'),
+(42, 'lqp2792', '2013-12-20'),
+(43, 'shu0ku0chi', '2013-12-20'),
+(44, 'shu0ku0chi', '2013-12-20'),
+(45, 'shu0ku0chi', '2013-12-20'),
+(46, 'shu0ku0chi', '2013-12-20'),
+(47, 'shu0ku0chi', '2013-12-20');
 
 -- --------------------------------------------------------
 
@@ -160,7 +203,29 @@ INSERT INTO `questions_level` (`qid`, `level`, `comment`) VALUES
 (23, 'pre_inter', ''),
 (24, 'adv_inter', ''),
 (25, 'inter', ''),
-(26, 'adv_inter', '');
+(26, 'adv_inter', ''),
+(27, 'inter', ''),
+(28, 'inter', ''),
+(29, 'inter', ''),
+(30, 'inter', ''),
+(31, 'inter', ''),
+(32, 'pre_inter', ''),
+(33, 'pre_inter', ''),
+(0, 'pre_inter', ''),
+(34, 'pre_inter', ''),
+(35, 'pre_inter', ''),
+(36, 'pre_inter', ''),
+(37, 'pre_inter', ''),
+(38, 'pre_inter', ''),
+(39, 'pre_inter', ''),
+(40, 'pre_inter', ''),
+(41, 'pre_inter', ''),
+(42, 'pre_inter', ''),
+(43, 'pre_inter', ''),
+(44, 'pre_inter', ''),
+(45, 'pre_inter', ''),
+(46, 'pre_inter', ''),
+(47, 'pre_inter', '');
 
 -- --------------------------------------------------------
 

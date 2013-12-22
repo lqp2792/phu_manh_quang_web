@@ -19,14 +19,15 @@
             if((strcmp($this->type, "empty")!=0) && (strcmp($this->exam, "empty")!=0)) {
                 $query = "SELECT * FROM questions, questions_level WHERE questions.qid = questions_level.qid
                 AND questions.type='$this->type' AND questions_level.level='$this->level'
-                AND questions.exam='$this->exam' LIMIT $this->page_num";
+                AND questions.exam='$this->exam' ORDER BY RAND() LIMIT $this->page_num";
             }
             if((strcmp($this->type, "empty")==0) && (strcmp($this->exam, "empty")!=0)) {
-                $query = "SELECT * FROM questions, questions_level WHERE questions.qid = questions_level.qid AND questions.exam='$this->exam' LIMIT $this->page_num";
+                $query = "SELECT * FROM questions, questions_level WHERE questions.qid = questions_level.qid
+                AND questions.exam='$this->exam' ORDER BY RAND() LIMIT $this->page_num";
             }
             if((strcmp($this->type, "empty")!=0) && (strcmp($this->exam, "empty")==0)) {
                 $query = "SELECT * FROM questions, questions_level WHERE questions.qid = questions_level.qid AND questions.type='$this->type'
-                 AND questions_level.level='$this->level' LIMIT $this->page_num";
+                 AND questions_level.level='$this->level' ORDER BY RAND() LIMIT $this->page_num";
             }
             return $db->query($dbc, $query);
         }
