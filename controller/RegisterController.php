@@ -70,7 +70,7 @@
                 $error[] = 'You forgot to enter your password';
             } else {
                 if($_POST['confirm_password'] != $_POST['password']) {
-                    $error[] = 'Your password did not match the confirmed passwrd';
+                    $error[] = 'Your password did not match the confirmed password';
                 } else {
                     $password = trim($_POST['password']);
                 }

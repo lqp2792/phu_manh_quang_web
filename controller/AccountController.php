@@ -75,8 +75,8 @@
             $result = $this->db->query($this->db->loadDatabase(), $query);
             $num_result = $result->num_rows;
             $page_limit = 10;
-            if(!isset($_GET['page'])) {$page=1;}
-            else $page = $_GET['page'];
+            if(isset($_GET['page'])) $page = $_GET['page'];
+            else $page = 1;
             if(($num_result % 10)>0) {
                 $num_page = ($num_result - $num_result%10)/10 + 1;
             } else {$num_page = $num_result/10;}
