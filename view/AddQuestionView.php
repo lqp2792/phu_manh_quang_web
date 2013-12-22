@@ -1,17 +1,17 @@
 <div class="full_w">
-    <script>
-        $(document).ready(function() {
-            $(".level").hide();
-            $(".type").change(function() {
-                var option = $(this).val();
-                if(option != "empty")  {
-                    $(".level").show();
-                } else {
-                    $(".level").hide();
-                }
-            });
-        });
-    </script>
+<!--    <script>-->
+<!--        $(document).ready(function() {-->
+<!--            $(".level").hide();-->
+<!--            $(".type").change(function() {-->
+<!--                var option = $(this).val();-->
+<!--                if(option != "empty")  {-->
+<!--                    $(".level").show();-->
+<!--                } else {-->
+<!--                    $(".level").hide();-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
     <div class="h_title">Add New Question</div>
     <form action="" method="post">
         <div class="element">
@@ -24,12 +24,24 @@
             <label for="exam">Exam <span>(optional)</span></label>
             <select name="exam">
                 <option value="empty">Exam Name</option>
-                <option value="TOEIC">TOEIC</option>
-                <option value="TOEFL">TOEFL</option>
-                <option value="ESL">ESL</option>
-                <option value="GRE">GRE</option>
-                <option value="SAT">SAT</option>
-                <option value="GMAT">GMAT</option>
+                <option value="TOEIC" <?php
+                    if(isset($_POST['exam']) && strcmp($_POST['exam'],'TOEIC')==0) echo "selected"
+                ?>>TOEIC</option>
+                <option value="TOEFL" <?php
+                    if(isset($_POST['exam']) && strcmp($_POST['exam'],'TOEFL')==0) echo "selected"
+                ?>>TOEFL</option>
+                <option value="ESL" <?php
+                    if(isset($_POST['exam']) && strcmp($_POST['exam'],'ESL')==0) echo "selected"
+                ?>>ESL</option>
+                <option value="GRE" <?php
+                    if(isset($_POST['exam']) && strcmp($_POST['exam'],'GRE')==0) echo "selected"
+                ?>>GRE</option>
+                <option value="SAT" <?php
+                    if(isset($_POST['exam']) && strcmp($_POST['exam'],'SAT')==0) echo "selected"
+                ?>>SAT</option>
+                <option value="GMAT" <?php
+                    if(isset($_POST['exam']) && strcmp($_POST['exam'],'GMAT')==0) echo "selected"
+                ?>>GMAT</option>
             </select>
         </div>
 
@@ -37,16 +49,28 @@
             <label for="type">Type <span class="red">(required)</span></label>
             <select name="type" class="type">
                 <option value="empty">Question Type</option>
-                <option value="Grammar">Grammar</option>
-                <option value="Vocabulary">Vocabulary</option>
-                <option value="Reading">Reading</option>
+                <option value="Grammar" <?php
+                    if(isset($_POST['type']) && strcmp($_POST['type'],'Grammar')==0) echo "selected"
+                ?>>Grammar</option>
+                <option value="Vocabulary" <?php
+                    if(isset($_POST['type']) && strcmp($_POST['type'],'Vocabulary')==0) echo "selected";
+                ?>>Vocabulary</option>
+                <option value="Reading" <?php
+                    if(isset($_POST['type']) && strcmp($_POST['type'],'Reading')==0) echo "selected"
+                ?>>Reading</option>
             </select>
 
             <select name="level" class="level">
                 <option value="empty">Level</option>
-                <option value="pre_inter">Pre-Inter</option>
-                <option value="inter">Intermediate</option>
-                <option value="adv_inter">Advanced</option>
+                <option value="pre_inter" <?php
+                    if(isset($_POST['level']) && strcmp($_POST['level'],'pre_inter')==0) echo "selected"
+                ?>>Pre-Inter</option>
+                <option value="inter" <?php
+                    if(isset($_POST['level']) && strcmp($_POST['level'],'inter')==0) echo "selected"
+                ?>>Intermediate</option>
+                <option value="adv_inter" <?php
+                    if(isset($_POST['level']) && strcmp($_POST['level'],'adv_inter')==0) echo "selected"
+                ?>>Advanced</option>
             </select>
         </div>
         <div class="element">

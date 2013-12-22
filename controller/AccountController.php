@@ -2,6 +2,7 @@
     include_once('model/DatabaseModel.php');
     include_once('model/QuestionModel.php');
     include_once('model/TestModel.php');
+    include_once('model/UserModel.php');
     class AccountController {
         public $action;
         public $params;
@@ -74,13 +75,8 @@
             $result = $this->db->query($this->db->loadDatabase(), $query);
             $num_result = $result->num_rows;
             $page_limit = 10;
-//<=======<<<<<< HEAD
-            if(!$_GET['page']) {$page=1;}
+            if(!isset($_GET['page'])) {$page=1;}
             else $page = $_GET['page'];
-
-//            if(isset($_GET['page'])) $page = $_GET['page'];
-//            else $page = 0;
-//>>>>>>> b545651d49b9c5cbb4b3aff41b0e53e50630bdb9
             if(($num_result % 10)>0) {
                 $num_page = ($num_result - $num_result%10)/10 + 1;
             } else {$num_page = $num_result/10;}
@@ -111,16 +107,16 @@
             $page_title = "Play";
             include('layout/header.php');
             $user_answer = array();
-            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') { // Sau khi click Submit Answer
                 for($i=0; $i<$_GET['page']; $i++) {
-                    $answer = "answer$i";
+                    $answer = "answer$i"; // Cau tra loi cua nguoi choi luu o $_POST['answer0'], ...$_POST['answer5'] .... $_POST['answer20']
                     if(!isset($_POST[$answer])) {
                         $_POST[$answer] = "";
                     }
                     $user_answer[] = $_POST[$answer];
                 }
-                $result = $this->check_result($user_answer);
-                if(isset($_GET['level'])) {
+                $result = $this->check_result($user_answer); // So sanh cau tra loi cua nguoi choi va dap an
+                if(isset($_GET['level'])) { // Xac dinh diem cho moi cau hoi tuy thuoc vao level
                     switch($_GET['level']) {
                         case "pre_inter":
                             $score_per_question=5;
@@ -135,7 +131,11 @@
                 } else {
                     $score_per_question=5;
                 }
-                $score = $this->cal_score($result, $score_per_question);
+                $score = $this->cal_score($result, $score_per_question);                // Tinh toan diem cua moi cau hoi, sau khi so sanh
+                $user = new UserModel($_SESSION['username']);
+                $user->getInformation($this->db, $_SESSION['username']);
+                $user->setScore($this->db, $score);                                     // Luu diem vao DB
+                $user->setHighScore($this->db, $score);
                 include('view/ResultView.php');
                 include('layout/footer.html');
                 return;

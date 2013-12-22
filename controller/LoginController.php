@@ -14,12 +14,7 @@
                 list($check, $data) = $this->check_login($dbc, $_POST['username'], $_POST['password']);
                 if($check) {
                     session_start();
-                    $_SESSION['uid'] = $data['uid'];
                     $_SESSION['username'] = $data['username'];
-                    $_SESSION['email'] = $data['email'];
-                    $_SESSION['first_name'] = $data['first_name'];
-                    $_SESSION['last_name'] = $data['last_name'];
-                    $_SESSION['phone_number'] = $data['phone_number'];
                     $this->redirect_user();
                 } else {
                     $error = $data;

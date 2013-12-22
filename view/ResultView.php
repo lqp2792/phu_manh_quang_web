@@ -46,6 +46,10 @@
             }
             $i++;
         }
-        echo '</form>'
     ?>
+        <div class="element">
+            <a class="button" href="Account/Create/">Take New Test</a><a class="button" href="Account/HighScore/">Hall of Fame</a>
+        </div>
+    </form>
+
 </div>
