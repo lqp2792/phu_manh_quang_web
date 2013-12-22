@@ -75,11 +75,11 @@
             $num_result = $result->num_rows;
             $page_limit = 10;
 //<=======<<<<<< HEAD
-            if(!$_GET['page']) {$page=1;}
-            else $page = $_GET['page'];
+//            if(!$_GET['page']) {$page=1;}
+//            else $page = $_GET['page'];
 
-//            if(isset($_GET['page'])) $page = $_GET['page'];
-//            else $page = 0;
+            if(isset($_GET['page'])) $page = $_GET['page'];
+            else $page = 1;
 //>>>>>>> b545651d49b9c5cbb4b3aff41b0e53e50630bdb9
             if(($num_result % 10)>0) {
                 $num_page = ($num_result - $num_result%10)/10 + 1;

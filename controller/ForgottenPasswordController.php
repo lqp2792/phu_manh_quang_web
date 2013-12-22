@@ -46,8 +46,11 @@ class ForgottenPasswordController {
             'Reply-To: englishtest.url.ph' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
         mail($to, $subject, $message, $headers);
+        $success[] = "Your password has been sent to your email.";
         include('layout/header.php');
-        include('view/ForgottenPasswordSuccessView.php');
+        if(isset($success) && !empty($success)) {
+            include('view/SuccessView.php');
+        }
         include('layout/footer.html');
         exit();
     }
