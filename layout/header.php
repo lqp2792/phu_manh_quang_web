@@ -23,7 +23,7 @@
             <div class="left">
                 <?php
                     if(isset($_SESSION['username'])) {
-                        echo '<p>Welcome, <strong>'.$_SESSION['username'].'</strong> [ <a href="Logout/">logout</a> ]</p>';
+                        echo '<p>Welcome, <strong>'.$_SESSION['username'].'</strong> [ <a href="Homepage/Logout/">logout</a> ]</p>';
                     } else {
                         echo '<p>English Test, Yolo !</p>';
                     }
@@ -42,39 +42,43 @@
                     if(isset($_SESSION['username'])) {
                         echo '<li class="upp"><a href="#">Main Menu</a>
                             <ul>
-                                <li>&#8250; <a href="ChangePassword/">Change Password</a></li>
-                                <li>&#8250; <a href="Logout/">Logout</a></li>
+                                <li>&#8250; <a href="Account/ChangePassword/">Change Password</a></li>
+                                <li>&#8250; <a href="Homepage/Logout/">Logout</a></li>
                             </ul>
                         </li>';
                     } else {
                         echo '<li class="upp"><a href="#">Main Menu</a>
                             <ul>
-                                <li>&#8250; <a href="Register/">Register</a></li>
-                                <li>&#8250; <a href="Login/">Login</a></li>
+                                <li>&#8250; <a href="Homepage/Register/">Register</a></li>
+                                <li>&#8250; <a href="Homepage/Login/">Login</a></li>
                             </ul>
                         </li>';
                     }
                 ?>
+                <?php
+                    if(isset($_SESSION['username'])) {
+                        echo '<li class="upp"><a href="Account/Create/">Test</a>
+                    <ul>
+                        <li>&#8250; <a href="Account/Add/">Add New Question</a></li>
+                        <li>&#8250; <a href="Account/HighScores/">View Highscores</a></li>
+                        <li>&#8250; <a href="Account/History/">Test History</a></li>
+                        <li>&#8250; <a href="Account/Create/">Take a Test</a></li>
+                    </ul>
+                </li>';
+                    }
+                ?>
+                <li class="upp"><a href="Homepage/Support/">Support</a>
+                    <ul>
+                        <li>&#8250; <a href="Homepage/Support/">Le Quang Phu</a></li>
+                        <li>&#8250; <a href="Homepage/Support/">Vu The Manh</a></li>
+                        <li>&#8250; <a href="Homepage/Support/">Do Duc Quang</a></li>
+                    </ul>
+                </li>
 
-                <li class="upp"><a href="#">Test Content</a>
+                <li class="upp"><a href="Homepage/Guide/">Help</a>
                     <ul>
-                        <li>&#8250; <a href="">Show all pages</a></li>
-                        <li>&#8250; <a href="">Add new page</a></li>
-                        <li>&#8250; <a href="">Add new gallery</a></li>
-                        <li>&#8250; <a href="">Categories</a></li>
-                    </ul>
-                </li>
-                <li class="upp"><a href="#">Support</a>
-                    <ul>
-                        <li>&#8250; <a href="">Le Quang Phu</a></li>
-                        <li>&#8250; <a href="">Vu The Manh</a></li>
-                        <li>&#8250; <a href="">Do Duc Quang</a></li>
-                    </ul>
-                </li>
-                <li class="upp"><a href="#">Help</a>
-                    <ul>
-                        <li>&#8250; <a href="">Site configuration</a></li>
-                        <li>&#8250; <a href="">Contact Form</a></li>
+                        <li>&#8250; <a href="Homepage/Guide/">Guide</a></li>
+                        <li>&#8250; <a href="Homepage/About/">About us!</a></li>
                     </ul>
                 </li>
             </ul>

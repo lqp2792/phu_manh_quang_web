@@ -12,7 +12,14 @@
         }
     </script>
     <div class="h_title">Result</div>
-    <div class="element"><h2><?php echo "Score: $score"?></h2></div>
+    <div class="element"><h2><?php
+            echo "Score: $score";
+            $count=0;
+            for($i=0; $i<$test->page;$i++) {
+                if($result[$i]) $count++;
+            }
+            echo " Answer: $count / $test->page";
+    ?></h2></div>
     <?php
         $set = $_SESSION['set'];
         $i=0;
@@ -48,7 +55,7 @@
         }
     ?>
         <div class="element">
-            <a class="button" href="Account/Create/">Take New Test</a><a class="button" href="Account/HighScore/">Hall of Fame</a>
+            <a class="button" href="Account/Create/">Take New Test</a><a class="button" href="Account/HighScores/">Hall of Fame</a>
         </div>
     </form>
 

@@ -1,6 +1,6 @@
 <div class="full_w">
     <div class="h_title">Register Form</div>
-    <form action="Register/" method="post">
+    <form action="Homepage/Register/" method="post">
         <table>
             <tr>
                 <td>Username:</td>

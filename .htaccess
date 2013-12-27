@@ -3,13 +3,14 @@
     RewriteEngine on
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^Register/?$ index.php
-    RewriteRule ^Login/?$ index.php
-    RewriteRule ^Logout/?$ index.php
-    RewriteRule ^ForgottenPassword/?$ index.php
+    RewriteRule ^Homepage/?$ index.php
+    RewriteRule ^Homepage/[A-Za-z]+/?$ index.php
     RewriteRule ^Account/?$ index.php
     RewriteRule ^Account/[A-Za-z]+/?$ index.php
     RewriteRule ^Account/Show/([0-9-]+)/?$ index.php?page=$1
+    RewriteRule ^Account/Edit/([0-9-]+)/?$ index.php?qid=$1
+    RewriteRule ^Account/Delete/([0-9-]+)/?$ index.php?qid=$1
     RewriteRule ^Account/QuestionHistory/([0-9-]+)/?$ index.php?page=$1
+    RewriteRule ^Account/Search/([^/.]+)/([^/.]+)/([^/.]+)/?$ index.php?type=$1&level=$2&exam=$3
     RewriteRule ^Account/Play/([^/.]+)/([^/.]+)/([^/.]+)/([0-9]+)/?$ index.php?type=$1&level=$2&exam=$3&page=$4 [L,NC,QSA]
 </IfModule>

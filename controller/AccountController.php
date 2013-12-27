@@ -24,6 +24,7 @@
             } else {
                 $page_title = "Account Panel";
                 include('layout/header.php');
+                include('view/AccountView.php');
                 include('layout/footer.html');
             }
         }
@@ -106,33 +107,20 @@
         public function play() {
             $page_title = "Play";
             include('layout/header.php');
+            $test = new TestModel($_GET['type'], $_GET['level'], $_GET['exam'], $_GET['page']);
             $user_answer = array();
-            if($_SERVER['REQUEST_METHOD'] == 'POST') { // Sau khi click Submit Answer
-                for($i=0; $i<$_GET['page']; $i++) {
-                    $answer = "answer$i"; // Cau tra loi cua nguoi choi luu o $_POST['answer0'], ...$_POST['answer5'] .... $_POST['answer20']
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {                                  // Sau khi click Submit Answer
+                for($i=0; $i<$test->page; $i++) {
+                    $answer = "answer$i";                                               // Cau tra loi cua nguoi choi luu o $_POST['answer0'], ...$_POST['answer5'] .... $_POST['answer20']
                     if(!isset($_POST[$answer])) {
                         $_POST[$answer] = "";
                     }
                     $user_answer[] = $_POST[$answer];
                 }
-                $result = $this->check_result($user_answer); // So sanh cau tra loi cua nguoi choi va dap an
-                if(isset($_GET['level'])) { // Xac dinh diem cho moi cau hoi tuy thuoc vao level
-                    switch($_GET['level']) {
-                        case "pre_inter":
-                            $score_per_question=5;
-                            break;
-                        case "inter":
-                            $score_per_question=10;
-                            break;
-                        case "adv_inter";
-                            $score_per_question=15;
-                            break;
-                    }
-                } else {
-                    $score_per_question=5;
-                }
-                $score = $this->cal_score($result, $score_per_question);                // Tinh toan diem cua moi cau hoi, sau khi so sanh
-                $user = new UserModel($_SESSION['username']);
+                $result = $test->check_result($user_answer, $_SESSION['result']);                            // So sanh cau tra loi cua nguoi choi va dap an
+                $score_per_question = $test->score_per_question($_GET['level']);        // Xac dinh diem cho moi cau hoi tuy thuoc vao level
+                $score = $test->cal_score($result, $score_per_question);                // Tinh toan diem cua moi cau hoi, sau khi so sanh
+                $user = new UserModel();
                 $user->getInformation($this->db, $_SESSION['username']);
                 $user->setScore($this->db, $score);                                     // Luu diem vao DB
                 $user->setHighScore($this->db, $score);
@@ -140,31 +128,32 @@
                 include('layout/footer.html');
                 return;
             }
-            $dbc = $this->db->loadDatabase();
-            $test = new TestModel($_GET['type'], $_GET['level'], $_GET['exam'], $_GET['page']);
-            $question_set = $test->get_questions($this->db, $dbc);
+            $question_set = $test->get_questions($this->db);
             include('view/PlayView.php');
             include('layout/footer.html');
-            $this->db->close($dbc);
         }
-
-        public function cal_score($result, $score_per_question) {
-            $score=0;
-            for($i=0; $i<$_GET['page']; $i++) {
-                if($result[$i]) $score+=$score_per_question;
-            }
-            return $score;
+        public function highscores() {
+            $page_title = "High Scores";
+            include('layout/header.php');
+            $query = "SELECT username, first_name, last_name, high_score FROM users, high_scores
+            WHERE high_scores.uid=users.uid ORDER BY high_score DESC LIMIT 10";
+            $dbc = $this->db->loadDatabase();
+            $r = $this->db->query($dbc, $query);
+            include('view/HighScoresView.php');
+            include('layout/footer.html');
         }
-        public function check_result($user_answer) {
-            $answer = $_SESSION['result'];
-            $result = array();
-            for($i=0; $i<$_GET['page']; $i++) {
-                if(strcmp($answer[$i], $user_answer[$i])==0) {
-                    $result[] = true;
-                } else $result[] = false;
-            }
-            return $result;
+        public function history() {
+            $page_title = "Test History";
+            include('layout/header.php');
+            $user = new UserModel($_SESSION['username']);
+            $user->getInformation($this->db, $_SESSION['username']);
+            $query = "SELECT tid, date, score FROM test_history WHERE uid=$user->uid";
+            $dbc = $this->db->loadDatabase();
+            $r = $this->db->query($dbc, $query);
+            include('view/HistoryView.php');
+            include('layout/footer.html');
         }
+        /* BEGIN: CREATE A TEST */
         public function create(){
             $page_title = "Create a Test";
             if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -197,6 +186,8 @@
             }
             return $error;
         }
+        /* END: CREATE A TEST */
+
         public function check_question() {
             $error = array();
             if(empty($_POST['content'])) {
@@ -226,5 +217,117 @@
             }
             return $error;
         }
+        /* BEGIN: SEARCH QUESTION */
+        public function search() {
+            $q = new QuestionModel();
+            $page_title = "Search Questions";
+            if($_SERVER['REQUEST_METHOD'] == "POST") {
+                $url = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
+                $url .= '/Account/Search/'.$_POST['type'].'/'.$_POST['level'].'/'.$_POST['exam'];
+                header("Location: $url");
+                exit();
+            }
+            if(isset($_GET['type'])) {
+                $set = $q->search_question($this->db, $_GET['type'], $_GET['level'], $_GET['exam']);
+                $_SESSION['type'] = $_GET['type'];
+                $_SESSION['level'] = $_GET['level'];
+                $_SESSION['exam'] = $_GET['exam'];
+            }
+
+            include('layout/header.php');
+            include('view/SearchQuestionView.php');
+            include('layout/footer.html');
+        }
+        /* END: SEARCH QUESTION */
+
+        /* BEGIN: EDIT QUESTION */
+        public function edit() {
+            $q = new QuestionModel();
+            $question = $q->get_question($this->db, $_GET['qid']);
+            $page_title = "Edit Questions";
+            if($_SERVER['REQUEST_METHOD'] == "POST") {
+                $error = $this->check_question();
+                if(empty($error)) {
+                    $q->edit($this->db, $_POST['qid'], $_POST['content'], isset($_POST['exam'])? $_POST['exam']: "",
+                    $_POST['type'], isset($_POST['level'])? $_POST['level']: "", isset($_POST['comment'])? $_POST['comment']: "",
+                    $_POST['choice_a'], $_POST['choice_b'], $_POST['choice_c'], $_POST['choice_d'], $_POST['answer']);
+
+                    $url = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
+                    $url .= '/Account/Search/'.$_SESSION['type'].'/'.$_SESSION['level'].'/'.$_SESSION['exam'];
+                    header("Location: $url");
+                    exit();
+                }
+            }
+            include('layout/header.php');
+            include('view/EditQuestionView.php');
+            include('layout/footer.html');
+        }
+        /* END: EDIT QUESTION */
+
+        /* BEGIN: DELETE QUESTION */
+        public function delete() {
+            $q = new QuestionModel();
+            $page_title = "Delete Questions";
+            if($_SERVER['REQUEST_METHOD'] == "POST") {
+                if($_POST['sure'] == 'Yes') {
+                    $q->delete($this->db, $_POST['qid']);
+
+                    $url = 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
+                    $url .= '/Account/Search/'.$_SESSION['type'].'/'.$_SESSION['level'].'/'.$_SESSION['exam'];
+                    header("Location: $url");
+                    exit();
+                }
+            }
+            include('layout/header.php');
+            include('view/DeleteQuestionView.php');
+            include('layout/footer.html');
+        }
+        /* END: DELETE QUESTION */
+
+        /* BEGIN: CHANGE PASSWORD */
+        public function changepassword(){
+            $dbc = $this->db->loadDatabase();
+            $user = new UserModel();
+            $page_title = "Change Password";
+            include('layout/header.php');
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $error = $this->check_info();
+                if(empty($error)) {
+                    list($check, $data) = $user->changePassword($this->db, $_SESSION['username'], $_POST['old_password'],
+                        $_POST['new_password'], $_POST['confirm_password']);
+                    if($check) {
+                        $success[] = "Your password has been successfully changed.";
+                        include('view/SuccessView.php');
+                    } else {
+                        $error[] = $data;
+                        include('view/ErrorView.php');
+                    }
+                }
+                else {
+                    include('view/ErrorView.php');
+                }
+            }
+            include('view/ChangePasswordView.php');
+            include('layout/footer.html');
+        }
+        public function check_info( ) {
+            $error = array();
+            if(empty($_POST['old_password'])) {
+                $error[] = 'You forgot to enter your old password';
+            }
+            if(empty($_POST['new_password'])) {
+                $error[] = 'You forgot to enter your new password';
+            }
+            if(empty($_POST['confirm_password'])) {
+                $error[] = 'You forgot to enter your confirm password';
+            } else {
+                if(strcmp($_POST['new_password'],$_POST['confirm_password']) != 0) {
+                    $error[] = 'Your confirm password does not match the new password';
+                }
+            }
+            return $error;
+        }
+        /* END: CHANGE PASSWORD */
+
     }
 ?>

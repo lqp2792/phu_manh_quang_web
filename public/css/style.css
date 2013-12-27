@@ -121,6 +121,7 @@ button:hover, .button:hover{
 .box ul li .users{ background: url(../img/i_users.png) no-repeat center left;}
 .box ul li .add_user{ background: url(../img/i_add_user.png) no-repeat center left;}
 .box ul li .block_users{ background: url(../img/i_block_users.png) no-repeat center left;}
+.box ul li .edit{ background: url(../img/i_edit.png) no-repeat center left;}
 
 
 
@@ -161,6 +162,9 @@ button:hover, .button:hover{
 #main .full_w p{
 	line-height: 16px;
 	margin: 5px 15px;
+}
+.displayed{
+    display: block;    margin-left: auto;    margin-right: auto
 }
 #main .half_w{
 	background: #ffffff;
@@ -363,7 +367,7 @@ table .chb{
 
 /* HELPERS START */
 
-.entry{ color: #444; margin: 5px 0; padding: 5px 300px; text-shadow: 0px 1px #ffffff; }
+.entry{ color: #444; margin: 5px 0; padding: 5px 15px; text-shadow: 0px 1px #ffffff; }
 .add{ background: #F3F3F3 url(../img/i_add.png) no-repeat 4px center;	padding-left: 25px;}
 .cancel{ background: #F3F3F3 url(../img/i_delete.png) no-repeat 4px center;	padding-left: 25px;}
 .sep{ border-bottom: 1px dashed #DDDDDD; margin: 10px 0;}
